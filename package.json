@@ -24,13 +24,18 @@
     "dev": "nodemon dist/server.js",
     "start2": "ts-node src/server.ts",
     "dev2": "nodemon --exec ts-node src/server.ts",
-    "lint": "next lint",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "format": "prettier --write .",
-    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build"
-  },
+    "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
+    "prepare": "husky install"
+   },
+   "husky": {
+      "hooks": {
+          "pre-commit": "npm run test-all"
+      }
+   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/asiancoderyoda/production-express-graphql-server.git"
