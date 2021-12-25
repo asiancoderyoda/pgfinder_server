@@ -128,7 +128,10 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(morgan('dev'));
-    this.app.use(cors());
+    this.app.use(cors({
+      origin: process.env.CLIENTURL,
+      credentials: true,
+    }));
     /*
         ----------------------------- For production use only ---------------------------
         ---- Using this in development won't allow you to use graphql sandbox ----
