@@ -79,7 +79,13 @@ class App {
         ],
       });
       await this.apolloServer.start();
-      await this.apolloServer.applyMiddleware({ app: this.app });
+      await this.apolloServer.applyMiddleware({
+        app: this.app,
+        cors: {
+          credentials: true,
+          origin: process.env.CLIENTURL || 'http://localhost:3000',
+        },
+      });
     } catch (error) {
       this.errLogger.error('Service: Apollo Server - Error: ' + error);
     }
@@ -128,10 +134,12 @@ class App {
 
   private initializeMiddlewares() {
     this.app.use(morgan('dev'));
-    this.app.use(cors({
-      origin: process.env.CLIENTURL,
-      credentials: true,
-    }));
+    this.app.use(
+      cors({
+        origin: process.env.CLIENTURL || 'http://localhost:3000',
+        credentials: true,
+      })
+    );
     /*
         ----------------------------- For production use only ---------------------------
         ---- Using this in development won't allow you to use graphql sandbox ----
